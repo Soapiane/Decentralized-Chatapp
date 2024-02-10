@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Soapiane/Decentralized-Chatapp/issues"
   },
-  "homepage": "https://github.com/Soapiane/Decentralized-Chatapp#readme"
+  "homepage": "https://github.com/Soapiane/Decentralized-Chatapp#readme",
+  "dependencies": {
+    "web3": "^4.4.0"
+  }
 }
