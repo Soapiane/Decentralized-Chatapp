@@ -1,20 +1,51 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-contract MessageContract{
+contract ChatApp{
 
-    mapping(string => string) private users; // Mapping username-password
+    struct User{
+         string username;
+         bytes32 passwordHash;
+         bytes32 sessionToken;
+         address userAddress;
+   }
 
-    event Registered(address indexed user, string username); // Event emitted after successful registration
-    event LoggedIn(address indexed user, string username); // Event emitted after successful login
-
-    function register(string memory _username, string memory _password) public {
-        require(bytes(users[_username]).length == 0, "Username already exists");
-        users[_username] = _password;
-        emit Registered(msg.sender, _username);
+   
+    struct ChatRoom{
+        string name;
+        address[] members;
     }
 
-    function login(string memory _username, string memory _password) public view returns (bool) {
-        return keccak256(abi.encodePacked(users[_username])) == keccak256(abi.encodePacked(_password));
-    }
+    mapping(address=>User) public users;
+
+
+   modifier userExists(){
+       require(users[msg.sender].userAddress != address(0), "User not found");
+       _;
+   }
+
+   modifier userDoesNotExist(){
+       require(users[msg.sender].userAddress == address(0), "User already exists");
+       _;
+   }
+
+
+   function register(string memory username, string memory password) public userDoesNotExist returns (bytes32){
+    bytes32 passwordHash = keccak256(abi.encodePacked(password));
+    bytes32 sessionToken = keccak256(abi.encodePacked(username, passwordHash, block.timestamp));
+    users[msg.sender] = User(username, passwordHash, sessionToken, msg.sender);
+
+    // Return the session token
+    return sessionToken;
+   }
+
+   function login(string memory password) public userExists returns (bytes32){
+       bytes32 passwordHash = keccak256(abi.encodePacked(password));
+       require(users[msg.sender].passwordHash == passwordHash, "Invalid username or password");
+       string memory username = users[msg.sender].username;
+       bytes32 sessionToken = keccak256(abi.encodePacked(username, passwordHash, block.timestamp));
+       users[msg.sender].sessionToken = sessionToken;
+       return sessionToken;
+   }
+
 }
