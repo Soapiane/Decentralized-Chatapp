@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.radial-gradient {
+  width: 100vw;
+  background-image: radial-gradient(
+    circle at top center,
+    #27447d 0%,
+    /* Start with transparency at the top */ #202c42 40%,
+    /* Gradient fades out at 50% */ #1e2430 60%
+      /* Change color at 50% to your desired color */
+  );
+}
