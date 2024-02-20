@@ -1,14 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.gradient-background {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    #ff7e5f,
+    #feb47b,
+    #ffdc7d,
+    #a5eb8b,
+    #7bf1a8,
+    #7de4ff,
+    #7b97ff,
+    #cf7bff,
+    #ff7ede,
+    #ff7e5f
+  );
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s linear infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(0deg); /* Initial rotation */
+  }
+  100% {
+    background-position: 100% 50%;
+    transform: rotate(360deg); /* Final rotation */
+  }
+}
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+  height: 10px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #eeeeee;
+  -webkit-border-radius: 16px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 10px;
+  background-color: #666;
+  border: 1px solid #eee;
+  -webkit-border-radius: 16px;
+}
+
 .radial-gradient {
-  width: 100vw;
   background-image: radial-gradient(
-    circle at top center,
-    #27447d 0%,
+    ellipse 100% 130% at top,
+    #263e6f 0%,
     /* Start with transparency at the top */ #202c42 40%,
     /* Gradient fades out at 50% */ #1e2430 60%
       /* Change color at 50% to your desired color */
+  );
+}
+.radial-gradient-arrow {
+  background-image: radial-gradient(
+    circle at center,
+    #3d60a4 0%,
+    /* Start with transparency at the top */ /* Gradient fades out at 50% */
+      #323d51 40% ,/* Change color at 50% to your desired color */
+      transparent 60%
   );
 }
